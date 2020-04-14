@@ -1,7 +1,9 @@
+const dummyData = require('../dummyData');
+
 module.exports = {
   Query: {
     item: (_, args, ctx) => {
-      return ''; // TODO: return the item from dummy data
+      return dummyData().entities.Q42;
     }
   }
 }
