@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +22,8 @@
   "dependencies": {
     "apollo-server": "^2.12.0",
     "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
