@@ -1,4 +1,4 @@
-export default function dummyData() {
+module.exports = function dummyData() {
     return {
         "entities":
         {
