@@ -3,17 +3,27 @@ const dummyData = require('../dummyData');
 const q42 = dummyData().entities.Q42;
 
 module.exports = {
-  Query: {
-    item: (_, args, ctx) => {
+  Query: {  
+    item: () => {
       return q42;
     }
   },
   Item: {
-    label: (_, args, ctx ) => {
-      return q42.labels[ args.language ];
+    label: (_, args) => {
+      return q42.labels[args.language];
     },
-    claims: () => {
-      return [].concat(...Object.values(q42.claims));
+    claims: (_) => {
+      return [].concat(...Object.values(_.claims));
+    }
+  },
+  Claim: {
+    references: (_) => {
+      return _.references;
+    }
+  },
+  Reference: {
+    snaks: (_) => {
+      return [].concat(...Object.values(_.snaks));
     }
   },
   Snak: {
