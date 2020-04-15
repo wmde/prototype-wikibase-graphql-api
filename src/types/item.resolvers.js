@@ -13,7 +13,10 @@ module.exports = {
     label: (_, args) => {
       return _.labels[args.language];
     },
-    claims: (_) => {
+    claims: (_, args) => {
+      if( args.propertyId ) {
+        return _.claims[args.propertyId];
+      }
       return [].concat(...Object.values(_.claims));
     },
     description: (_, args ) => {

@@ -13,7 +13,7 @@ const typeDefs = gql`
     ## Implement those later
     description(language: String): Description
     # aliases: [Alias]]
-    claims: [Claim]
+    claims(propertyId: String): [Claim]
     # sitelinks: [Sitelink]
   }
 
