@@ -1,16 +1,17 @@
 const dummyData = require('../dummyData');
 
-const q42 = dummyData().entities.Q42;
+const entities = dummyData().entities;
 
 module.exports = {
   Query: {  
-    item: () => {
-      return q42;
+    item: (_, args) => {
+      const entityId = args.id.toUpperCase();
+      return entities[entityId];
     }
   },
   Item: {
     label: (_, args) => {
-      return q42.labels[args.language];
+      return _.labels[args.language];
     },
     claims: (_) => {
       return [].concat(...Object.values(_.claims));
