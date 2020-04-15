@@ -9,7 +9,7 @@ const typeDefs = gql`
     modified: String!
     type: String!
     id: String!
-    label(language: String): Label!
+    label(language: String): Label
     ## Implement those later
     # descriptions: [Description]
     # aliases: [Alias]]
