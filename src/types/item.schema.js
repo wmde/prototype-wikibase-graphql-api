@@ -25,6 +25,7 @@ const typeDefs = gql`
   type Claim {
     id: String!
     mainsnak: Snak!
+    references: [Reference]
   }
 
   interface Snak {
@@ -63,6 +64,11 @@ const typeDefs = gql`
     datatype: String!
   }
 
+  type Reference {
+    hash: String
+    snaks: [Snak]
+    snakOrder: [String]
+  }
   type Query {
     item: Item!
   }
