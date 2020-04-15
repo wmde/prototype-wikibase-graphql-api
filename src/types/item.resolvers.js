@@ -14,7 +14,10 @@ module.exports = {
     },
     claims: (_) => {
       return [].concat(...Object.values(_.claims));
-    }
+    },
+    description: (_, args ) => {
+      return _.descriptions[ args.language ];
+    },
   },
   Claim: {
     references: (_) => {

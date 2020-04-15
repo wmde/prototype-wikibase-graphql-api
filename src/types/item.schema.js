@@ -11,13 +11,18 @@ const typeDefs = gql`
     id: String!
     label(language: String): Label
     ## Implement those later
-    # descriptions: [Description]
+    description(language: String): Description
     # aliases: [Alias]]
     claims: [Claim]
     # sitelinks: [Sitelink]
   }
 
   type Label {
+      language: String!
+      value: String!
+  }
+
+  type Description {
       language: String!
       value: String!
   }
