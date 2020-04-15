@@ -1,12 +1,11 @@
-const dummyData = require('../dummyData');
+const EntityRepository = require('../dataSources/EntityRepository');
 
-const entities = dummyData().entities;
+const entityRepo = new EntityRepository();
 
 module.exports = {
-  Query: {  
-    item: (_, args) => {
-      const entityId = args.id.toUpperCase();
-      return entities[entityId];
+  Query: {
+    item: (_, { id }) => {
+      return entityRepo.getEntity( id.toUpperCase() );
     }
   },
   Item: {
