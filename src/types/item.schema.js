@@ -75,7 +75,7 @@ const typeDefs = gql`
     snakOrder: [String]
   }
   type Query {
-    item: Item!
+    item(id: String!): Item!
   }
 `;
 
