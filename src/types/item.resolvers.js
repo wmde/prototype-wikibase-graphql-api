@@ -41,7 +41,7 @@ module.exports = {
   PropertyValueSnak: {
     datavalue: (snak) => {
       if (snak.datatype === 'wikibase-item') {
-        return snak.datavalue.value; // contains the item id
+        return entityRepo.getEntity(snak.datavalue.value.id);
       }
 
       return snak.datavalue;
@@ -52,7 +52,7 @@ module.exports = {
       if (datavalue.type === 'string') {
         return 'StringValue';
       }
-      if (datavalue['entity-type'] && datavalue['entity-type'] === 'item') {
+      if (datavalue.type && datavalue.type === 'item') {
         return 'Item';
       }
 
