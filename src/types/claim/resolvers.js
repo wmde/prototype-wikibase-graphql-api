@@ -21,10 +21,10 @@ module.exports = {
       return _.references;
     },
     qualifiers: (_, { propertyId }) => {
-      if (_.qualifiers ) {
+      if (_.qualifiers && _.qualifiers[propertyId]) {
         return _.qualifiers[propertyId];
       }
-      return null;
+      return [];
     }
   },
   Reference: {

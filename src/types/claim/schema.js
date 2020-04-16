@@ -8,7 +8,7 @@ module.exports = gql`
   type Claim {
     id: String!
     mainsnak: Snak!
-    qualifier(propertyId: String): [Qualifier]
+    qualifiers(propertyId: String): [Qualifier]
     references: [Reference]
   }
 
