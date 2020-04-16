@@ -10,5 +10,6 @@ services:
     command: npm run dev
     environment:
       - PORT
+      - API_URL
     ports:
       - '${PORT}:4000'

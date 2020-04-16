@@ -1,5 +1,7 @@
 const {ApolloServer, makeExecutableSchema} = require('apollo-server');
-const EntityRepository = require('./dataSources/EntityRepository');
+const WikibaseActionApi = require('./dataSources/WikibaseActionApi');
+
+const apiUrl = process.env.API_URL;
 
 const server = new ApolloServer({
   schema: makeExecutableSchema({
@@ -20,10 +22,10 @@ const server = new ApolloServer({
     inheritResolversFromInterfaces: true
   }),
   dataSources: () => ({
-    wbRepo: new EntityRepository()
+    wbRepo: new WikibaseActionApi(apiUrl)
   }),
 });
 
 server.listen().then(() => {
-  console.log(`🚀  Server ready at port ${process.env.PORT}`);
+  console.log(`🚀  Server ready at port ${process.env.PORT} fetching data from ${(new URL(apiUrl)).host}`);
 });
