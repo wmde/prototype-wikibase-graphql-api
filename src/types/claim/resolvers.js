@@ -1,26 +1,20 @@
-const EntityRepository = require('../dataSources/EntityRepository');
+const EntityRepository = require('../../dataSources/EntityRepository');
 
-const entityRepo = new EntityRepository();
+const entityRepo = new EntityRepository(); // should not create a new repository, but reuse the same one that's used elsewhere
 
 module.exports = {
-  Query: {
-    item: (_, { id }) => {
-      return entityRepo.getEntity( id.toUpperCase() );
-    }
-  },
-  Item: {
-    label: (_, args) => {
-      return _.labels[args.language];
-    },
+  StatementsProvider: {
     claims: (_, args) => {
       if( args.propertyId ) {
         return _.claims[args.propertyId];
       }
       return [].concat(...Object.values(_.claims));
     },
-    description: (_, args ) => {
-      return _.descriptions[ args.language ];
-    },
+
+    __resolveType(entity) {
+      // duplicated in StatementsProvider, could be extracted if it pops up more often
+      return entity.type === 'item' ? 'Item' : 'Property';
+    }
   },
   Claim: {
     references: (_) => {
@@ -62,4 +56,4 @@ module.exports = {
       return 'UnknownValue';
     }
   }
-}
+};
