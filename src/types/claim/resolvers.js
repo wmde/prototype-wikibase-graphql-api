@@ -4,11 +4,16 @@ const entityRepo = new EntityRepository(); // should not create a new repository
 
 module.exports = {
   StatementsProvider: {
-    claims: (_, args) => {
-      if (args.propertyId) {
-        return _.claims[args.propertyId];
+    claims: (_, { propertyIDs }) => {
+      const claims = [].concat(...Object.values(_.claims));
+
+      if (propertyIDs) {
+        const claim =  claims.filter(claim => propertyIDs.includes(claim.mainsnak.property));
+        console.log( claims[0].mainsnak );
+        return claim;
       }
-      return [].concat(...Object.values(_.claims));
+
+      return claims;
     },
 
     __resolveType(entity) {

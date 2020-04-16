@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   interface StatementsProvider {
-    claims(propertyId: String): [Claim]
+    claims(propertyIDs: [String]): [Claim]
   }
   
   type Claim {
@@ -49,7 +49,7 @@ module.exports = gql`
   }
 
   type Qualifier implements Snak {
-    property: String! # We probably want this to be a Property object and not a string at some point
+    property: Property! # We probably want this to be a Property object and not a string at some point
     snaktype: String!
     datatype: String!
 
