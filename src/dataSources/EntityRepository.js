@@ -2,7 +2,7 @@ const dummyData = require('./dummyData');
 
 module.exports = class EntityRepository {
 
-  getEntity(id) {
+  async getEntity(id) {
     return dummyData.entities[id] || { id };
   }
 

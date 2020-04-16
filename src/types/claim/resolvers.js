@@ -1,7 +1,3 @@
-const EntityRepository = require('../../dataSources/EntityRepository');
-
-const entityRepo = new EntityRepository(); // should not create a new repository, but reuse the same one that's used elsewhere
-
 module.exports = {
   StatementsProvider: {
     claims: (_, { propertyIDs }) => {
@@ -36,8 +32,8 @@ module.exports = {
     }
   },
   Snak: {
-    property: ({ property }) => {
-      return entityRepo.getEntity(property);
+    property: async ({ property }, _, { dataSources }) => {
+      return dataSources.wbRepo.getEntity(property);
     },
     __resolveType(snak) {
       return {
@@ -48,9 +44,9 @@ module.exports = {
     }
   },
   PropertyValueSnak: {
-    datavalue: (snak) => {
+    datavalue: async (snak, _, { dataSources }) => {
       if (snak.datatype === 'wikibase-item') {
-        return entityRepo.getEntity(snak.datavalue.value.id);
+        return dataSources.wbRepo.getEntity(snak.datavalue.value.id);
       }
 
       return snak.datavalue;

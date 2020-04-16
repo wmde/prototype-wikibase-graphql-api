@@ -1,4 +1,5 @@
 const {ApolloServer, makeExecutableSchema} = require('apollo-server');
+const EntityRepository = require('./dataSources/EntityRepository');
 
 const server = new ApolloServer({
   schema: makeExecutableSchema({
@@ -17,7 +18,10 @@ const server = new ApolloServer({
       ...require('./types/fingerprint/resolvers')
     },
     inheritResolversFromInterfaces: true
-  })
+  }),
+  dataSources: () => ({
+    wbRepo: new EntityRepository()
+  }),
 });
 
 server.listen().then(() => {
