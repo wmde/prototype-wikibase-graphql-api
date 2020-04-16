@@ -1,32 +1,10 @@
 const { gql } = require('apollo-server');
 
-const typeDefs = gql`
-  type Item {
-    pageid: Int!
-    ns: Int!
-    title: String!
-    lastrevid: Int!
-    modified: String!
-    type: String!
-    id: String!
-    label(language: String): Label
-    ## Implement those later
-    description(language: String): Description
-    # aliases: [Alias]]
+module.exports = gql`
+  interface StatementsProvider {
     claims(propertyId: String): [Claim]
-    # sitelinks: [Sitelink]
   }
-
-  type Label {
-      language: String!
-      value: String!
-  }
-
-  type Description {
-      language: String!
-      value: String!
-  }
-
+  
   type Claim {
     id: String!
     mainsnak: Snak!
@@ -74,9 +52,4 @@ const typeDefs = gql`
     snaks: [Snak]
     snakOrder: [String]
   }
-  type Query {
-    item(id: String!): Item!
-  }
 `;
-
-module.exports = typeDefs;
