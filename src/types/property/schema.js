@@ -12,7 +12,7 @@ const typeDefs = gql`
     datatype: String!
     label(language: String): Label
     description(language: String): Description
-    claims(propertyId: String): [Claim]
+    claims(propertyIDs: [String]): [Claim]
   }
 `;
 

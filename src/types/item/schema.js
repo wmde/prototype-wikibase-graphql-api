@@ -11,7 +11,7 @@ const typeDefs = gql`
     id: String!
     label(language: String): Label
     description(language: String): Description
-    claims(propertyId: String): [Claim]
+    claims(propertyIDs: [String]): [Claim]
     # sitelinks: [Sitelink]
   }
 `;
