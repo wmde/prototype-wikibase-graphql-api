@@ -5,12 +5,14 @@ const server = new ApolloServer({
     typeDefs: [
       require('./types/query.schema'),
       require('./types/item/schema'),
+      require('./types/property/schema'),
       require('./types/claim/schema'),
       require('./types/fingerprint/schema')
     ],
     resolvers: {
       ...require('./types/query.resolvers'),
       ...require('./types/item/resolvers'),
+      ...require('./types/property/resolvers'),
       ...require('./types/claim/resolvers'),
       ...require('./types/fingerprint/resolvers')
     },
