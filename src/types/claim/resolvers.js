@@ -5,7 +5,7 @@ const entityRepo = new EntityRepository(); // should not create a new repository
 module.exports = {
   StatementsProvider: {
     claims: (_, args) => {
-      if( args.propertyId ) {
+      if (args.propertyId) {
         return _.claims[args.propertyId];
       }
       return [].concat(...Object.values(_.claims));
@@ -19,6 +19,12 @@ module.exports = {
   Claim: {
     references: (_) => {
       return _.references;
+    },
+    qualifiers: (_, { propertyId }) => {
+      if (_.qualifiers && _.qualifiers[propertyId]) {
+        return _.qualifiers[propertyId];
+      }
+      return [];
     }
   },
   Reference: {

@@ -8,6 +8,7 @@ module.exports = gql`
   type Claim {
     id: String!
     mainsnak: Snak!
+    qualifiers(propertyId: String): [Qualifier]
     references: [Reference]
   }
 
@@ -45,6 +46,15 @@ module.exports = gql`
     property: String! # We probably want this to be a Property object and not a string at some point
     snaktype: String!
     datatype: String!
+  }
+
+  type Qualifier implements Snak {
+    property: String! # We probably want this to be a Property object and not a string at some point
+    snaktype: String!
+    datatype: String!
+
+    hash: String!
+    datavalue: Value
   }
 
   type Reference {
