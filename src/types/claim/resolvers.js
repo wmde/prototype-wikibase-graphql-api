@@ -8,9 +8,7 @@ module.exports = {
       const claims = [].concat(...Object.values(_.claims));
 
       if (propertyIDs) {
-        const claim =  claims.filter(claim => propertyIDs.includes(claim.mainsnak.property));
-        console.log( claims[0].mainsnak );
-        return claim;
+        return claims.filter(claim => propertyIDs.includes(claim.mainsnak.property));
       }
 
       return claims;
