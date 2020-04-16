@@ -4,7 +4,7 @@ module.exports = gql`
   interface FingerprintProvider {
     label(language: String): Label
     description(language: String): Description
-    # aliases: [Alias]]
+    aliases(language: String): [Alias]
   }
 
   type Label {
@@ -13,6 +13,11 @@ module.exports = gql`
   }
 
   type Description {
+    language: String!
+    value: String!
+  }
+
+  type Alias {
     language: String!
     value: String!
   }

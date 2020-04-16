@@ -12,6 +12,7 @@ const typeDefs = gql`
     label(language: String): Label
     description(language: String): Description
     claims(propertyIDs: [String]): [Claim]
+    aliases(language: String): [Alias]
     # sitelinks: [Sitelink]
   }
 `;

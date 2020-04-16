@@ -8,6 +8,10 @@ module.exports = {
       return _.descriptions[args.language];
     },
 
+    aliases: (_, args) => {
+      return _.aliases[args.language]
+    },
+
     __resolveType(entity) {
       // duplicated in StatementsProvider, could be extracted if it pops up more often
       return entity.type === 'item' ? 'Item' : 'Property';
