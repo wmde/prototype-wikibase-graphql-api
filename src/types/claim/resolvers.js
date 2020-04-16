@@ -20,7 +20,7 @@ module.exports = {
     references: (_) => {
       return _.references;
     },
-    qualifier: (_, { propertyId }) => {
+    qualifiers: (_, { propertyId }) => {
       if (_.qualifiers ) {
         return _.qualifiers[propertyId];
       }
