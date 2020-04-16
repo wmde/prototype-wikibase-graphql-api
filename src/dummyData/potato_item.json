@@ -1,0 +1,66 @@
+{
+  "pageid": 6,
+  "ns": 120,
+  "title": "Item:Q3",
+  "lastrevid": 22,
+  "modified": "2020-04-15T15:47:31Z",
+  "type": "item",
+  "id": "Q3",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Potato"
+    },
+    "de": {
+      "language": "de",
+      "value": "Kartoffel"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "root vegetable"
+    },
+    "de": {
+      "language": "de",
+      "value": "unterirdische Knollen der Kartoffel (Solanum tuberosum)"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "spud"
+      }
+    ],
+    "de": [
+      {
+        "language": "de",
+        "value": "Erdapfel"
+      }
+    ]
+  },
+  "claims": {
+    "P2": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4,
+              "id": "Q4"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3$a17cbf22-4176-dfc5-28bd-4179064b9ff2",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

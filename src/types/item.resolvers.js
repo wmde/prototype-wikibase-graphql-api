@@ -1,12 +1,11 @@
-const dummyData = require('../dummyData');
+const EntityRepository = require('../dataSources/EntityRepository');
 
-const entities = dummyData().entities;
+const entityRepo = new EntityRepository();
 
 module.exports = {
-  Query: {  
-    item: (_, args) => {
-      const entityId = args.id.toUpperCase();
-      return entities[entityId];
+  Query: {
+    item: (_, { id }) => {
+      return entityRepo.getEntity( id.toUpperCase() );
     }
   },
   Item: {
@@ -45,7 +44,7 @@ module.exports = {
   PropertyValueSnak: {
     datavalue: (snak) => {
       if (snak.datatype === 'wikibase-item') {
-        return snak.datavalue.value; // contains the item id
+        return entityRepo.getEntity(snak.datavalue.value.id);
       }
 
       return snak.datavalue;
@@ -56,7 +55,7 @@ module.exports = {
       if (datavalue.type === 'string') {
         return 'StringValue';
       }
-      if (datavalue['entity-type'] && datavalue['entity-type'] === 'item') {
+      if (datavalue.type && datavalue.type === 'item') {
         return 'Item';
       }
 
