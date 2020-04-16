@@ -13,13 +13,13 @@ module.exports = gql`
   }
 
   interface Snak {
-    property: String! # We probably want this to be a Property object and not a string at some point
+    property: Property!
     snaktype: String!
     datatype: String!
   }
 
   type PropertyValueSnak implements Snak {
-    property: String! # We probably want this to be a Property object and not a string at some point
+    property: Property!
     snaktype: String!
     datatype: String!
 
@@ -37,13 +37,13 @@ module.exports = gql`
   }
 
   type PropertyNoValueSnak implements Snak {
-    property: String! # We probably want this to be a Property object and not a string at some point
+    property: Property!
     snaktype: String!
     datatype: String!
   }
 
   type PropertySomeValueSnak implements Snak {
-    property: String! # We probably want this to be a Property object and not a string at some point
+    property: Property!
     snaktype: String!
     datatype: String!
   }

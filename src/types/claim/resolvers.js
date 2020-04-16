@@ -33,6 +33,9 @@ module.exports = {
     }
   },
   Snak: {
+    property: ({ property }) => {
+      return entityRepo.getEntity(property);
+    },
     __resolveType(snak) {
       return {
         value: 'PropertyValueSnak',
