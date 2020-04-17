@@ -1,11 +1,17 @@
 module.exports = {
   FingerprintProvider: {
-    label: (_, args) => {
-      return _.labels[args.language];
+    labels: (_, args) => {
+      if( args.language ) {
+        return [ _.labels[args.language] ];
+      }
+      return [].concat(...Object.values(_.labels) );
     },
 
-    description: (_, args) => {
-      return _.descriptions[args.language];
+    descriptions: (_, args) => {
+      if( args.language ) {
+        return [ _.descriptions[args.language] ];
+      }
+      return [].concat(...Object.values(_.descriptions) );
     },
 
     aliases: (_, args) => {

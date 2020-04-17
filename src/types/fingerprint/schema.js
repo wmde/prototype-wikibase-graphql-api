@@ -2,8 +2,8 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   interface FingerprintProvider {
-    label(language: String): Label
-    description(language: String): Description
+    labels(language: String): [Label]
+    descriptions(language: String): [Description]
     aliases(language: String): [Alias]
   }
 
