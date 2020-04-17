@@ -1,4 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const DataLoader = require('dataloader');
 
 module.exports = class WikibaseActionApi extends RESTDataSource {
 
@@ -8,13 +9,21 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
   }
 
   async getEntity(id) {
-    const result = await this.get('', {
+    return this.getEntitiesLoader.load(id);
+  }
+
+  getEntitiesLoader = new DataLoader(async (ids) => {
+    const getEntitiesResponse = await this.get('', {
       action: 'wbgetentities',
       format: 'json',
-      ids: [id]
+      ids: ids.join('|')
     });
 
-    return result.entities[id];
+    return ids.map(id => getEntitiesResponse.entities[id]);
+  });
+
+  willSendRequest(request) {
+    console.log(request);
   }
 
 }
