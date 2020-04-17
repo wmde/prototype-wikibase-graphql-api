@@ -18,11 +18,11 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
       action: 'wbgetentities',
       format: 'json',
       ids: ids.join('|')
-    }, {
-      maxBatchSize: 50,
     });
 
     return ids.map(id => getEntitiesResponse.entities[id]);
+  }, {
+    maxBatchSize: 50,
   });
 
   _getUserAgentString() {
