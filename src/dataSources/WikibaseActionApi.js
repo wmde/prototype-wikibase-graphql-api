@@ -13,17 +13,39 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
     return this.getEntitiesLoader.load(id);
   }
 
+  async searchEntities(query, language) {
+    return await this.getSearchedEntities( {query, language} );
+  }
+
   getEntitiesLoader = new DataLoader(async (ids) => {
     const getEntitiesResponse = await this.get('', {
       action: 'wbgetentities',
       format: 'json',
       ids: ids.join('|')
     });
-
     return ids.map(id => getEntitiesResponse.entities[id]);
   }, {
     maxBatchSize: 50,
   });
+
+  async getSearchedEntities({query, language}) {
+    const searchEntitiesResponse = await this.get('', {
+      action: 'wbsearchentities',
+      format: 'json',
+      search: query,
+      language: language
+    });
+    const ids = [];
+    searchEntitiesResponse.search.forEach( (result) => {
+      ids.push( result.id );
+    });
+    const getEntitiesResponse = await this.get('', {
+      action: 'wbgetentities',
+      format: 'json',
+      ids: ids.join('|')
+    });
+    return ids.map(id => getEntitiesResponse.entities[id]);
+  };
 
   _getUserAgentString() {
     const appInformation = `${packageInfo.name}/${packageInfo.version}`;
@@ -32,7 +54,7 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
 
     return `${appInformation} (${authorInfo}) ${libraryInfo}`;
   }
-
+  
   willSendRequest(request) {
     console.log(request);
     request.headers.set('User-agent', this._getUserAgentString());
