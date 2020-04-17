@@ -13,7 +13,14 @@ const typeDefs = gql`
     descriptions(language: String): [Description]
     claims(propertyIDs: [String]): [Claim]
     aliases(language: String): [Alias]
-    # sitelinks: [Sitelink]
+    sitelinks(sites: [String]): [Sitelink]
+  }
+
+  type Sitelink {
+    site: String!
+    title: String!
+    url: String # sadly not contained in the wgetentities response (but included in Special:EntityData)
+    badges: [String] # could be a list of items?
   }
 `;
 
