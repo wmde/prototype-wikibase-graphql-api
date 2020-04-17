@@ -1,17 +1,20 @@
+function filterTerms(termsMap, { language, languages }) {
+  const terms = Object.values(termsMap);
+  if (language) {
+    languages = [language];
+  }
+
+  return languages ? terms.filter(term => languages.includes(term.language)) : terms;
+}
+
 module.exports = {
   FingerprintProvider: {
-    labels: (_, args) => {
-      if( args.language ) {
-        return [ _.labels[args.language] ];
-      }
-      return [].concat(...Object.values(_.labels) );
+    labels: ({ labels }, args) => {
+      return filterTerms(labels, args);
     },
 
-    descriptions: (_, args) => {
-      if( args.language ) {
-        return [ _.descriptions[args.language] ];
-      }
-      return [].concat(...Object.values(_.descriptions) );
+    descriptions: ({ descriptions }, args) => {
+      return filterTerms(descriptions, args)
     },
 
     aliases: (_, args) => {

@@ -9,8 +9,8 @@ const typeDefs = gql`
     modified: String!
     type: String!
     id: String!
-    labels(language: String): [Label]
-    descriptions(language: String): [Description]
+    labels(language: String, languages: [String]): [Label]
+    descriptions(language: String, languages: [String]): [Description]
     claims(propertyIDs: [String]): [Claim]
     aliases(language: String): [Alias]
     # sitelinks: [Sitelink]

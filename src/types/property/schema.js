@@ -10,8 +10,8 @@ const typeDefs = gql`
     type: String!
     id: String!
     datatype: String!
-    labels(language: String): [Label]
-    descriptions(language: String): [Description]
+    labels(language: String, languages: [String]): [Label]
+    descriptions(language: String, languages: [String]): [Description]
     claims(propertyIDs: [String]): [Claim]
     aliases(language: String): [Alias]
   }
