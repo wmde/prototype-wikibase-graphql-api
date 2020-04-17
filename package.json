@@ -13,7 +13,7 @@
     "url": "git+https://github.com/wmde/prototype-wikibase-graphql-api.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "The Wikidata team",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/wmde/prototype-wikibase-graphql-api/issues"
