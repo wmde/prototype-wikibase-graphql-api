@@ -1,8 +1,5 @@
-function filterTerms(termsMap, { language, languages }) {
+function filterTerms(termsMap, { languages }) {
   const terms = Object.values(termsMap);
-  if (language) {
-    languages = [language];
-  }
 
   return languages ? terms.filter(term => languages.includes(term.language)) : terms;
 }
