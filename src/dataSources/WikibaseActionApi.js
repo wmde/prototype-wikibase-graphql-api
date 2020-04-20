@@ -14,7 +14,13 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
   }
 
   async searchEntities(query, language) {
-    return await this.getSearchedEntities( {query, language} );
+      const searchEntitiesResponse = await this.get('', {
+        action: 'wbsearchentities',
+        format: 'json',
+        search: query,
+        language: language
+      });
+      return searchEntitiesResponse.search.map(({ id }) => this.getEntitiesLoader.load(id));
   }
 
   getEntitiesLoader = new DataLoader(async (ids) => {
@@ -28,25 +34,6 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
     maxBatchSize: 50,
   });
 
-  async getSearchedEntities({query, language}) {
-    const searchEntitiesResponse = await this.get('', {
-      action: 'wbsearchentities',
-      format: 'json',
-      search: query,
-      language: language
-    });
-    const ids = [];
-    searchEntitiesResponse.search.forEach( (result) => {
-      ids.push( result.id );
-    });
-    const getEntitiesResponse = await this.get('', {
-      action: 'wbgetentities',
-      format: 'json',
-      ids: ids.join('|')
-    });
-    return ids.map(id => getEntitiesResponse.entities[id]);
-  };
-
   _getUserAgentString() {
     const appInformation = `${packageInfo.name}/${packageInfo.version}`;
     const authorInfo = `${packageInfo.author}`;
@@ -54,7 +41,7 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
 
     return `${appInformation} (${authorInfo}) ${libraryInfo}`;
   }
-  
+
   willSendRequest(request) {
     console.log(request);
     request.headers.set('User-agent', this._getUserAgentString());
