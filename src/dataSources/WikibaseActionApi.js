@@ -13,13 +13,22 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
     return this.getEntitiesLoader.load(id);
   }
 
+  async searchEntities(query, language) {
+      const searchEntitiesResponse = await this.get('', {
+        action: 'wbsearchentities',
+        format: 'json',
+        search: query,
+        language: language
+      });
+      return searchEntitiesResponse.search.map(({ id }) => this.getEntitiesLoader.load(id));
+  }
+
   getEntitiesLoader = new DataLoader(async (ids) => {
     const getEntitiesResponse = await this.get('', {
       action: 'wbgetentities',
       format: 'json',
       ids: ids.join('|')
     });
-
     return ids.map(id => getEntitiesResponse.entities[id]);
   }, {
     maxBatchSize: 50,
