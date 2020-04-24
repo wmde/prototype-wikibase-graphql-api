@@ -1,9 +1,24 @@
 <template>
   <div>
-      <input v-model.lazy="itemId"/>
-      <div v-if="itemLabel">
-          label: <strong>{{ itemLabel }}</strong>
-      </div>
+  Hellooo!
+      <v-autocomplete
+          :items="items"
+          :search-input.sync="search"
+          color="white"
+          hide-no-data
+          hide-selected
+          item-text="label"
+          item-value="id"
+          label="Item search"
+          placeholder="Start typing to Search"
+          prepend-icon="mdi-database-search"
+          return-object
+      >
+          <template v-slot:item="{ item }">
+              {{item.label}} ({{item.id}})
+              <p>{{item.description}}</p>
+          </template>
+      </v-autocomplete>
   </div>
 </template>
 
@@ -13,33 +28,54 @@ import gql from 'graphql-tag'
 export default {
   data() {
     return {
-      itemId: '',
-      itemLabel: ''
+      results: [],
+      search: null,
+    }
+  },
+
+  computed: {
+    items() {
+      return this.results.map(res => {
+        return {
+          ...res,
+          label: res.labels[0].value,
+          description: res.descriptions[0].value
+        }
+      })
+    }
+  },
+
+  watch: {
+    search(val) {
+      console.log(val)
     }
   },
 
   apollo: {
-    itemLabel: {
-      query: gql`query item($itemId: String!){
-        item(id: $itemId) {
-          id
-          labels(languages: ["en"]) {
-            value
+    results: {
+      query: gql`query search($search: String!){
+          search(
+            query: $search,
+            language: "en"
+          ) {
+            id
+            labels(languages: ["en"]) { value }
+            descriptions(languages: ["en"]) { value }
           }
-        }
       }`,
       variables() {
         return {
-          itemId: this.itemId
+          search: this.search
         }
       },
       skip() {
-        return !this.itemId
+        return !this.search
       },
       update(result) {
-        return result.item.labels[0].value
-      }
-
+        console.log(result)
+        return result.search
+      },
+      throttle: 100
     }
   }
 }
