@@ -9,7 +9,6 @@
                 hide-selected
                 item-text="label"
                 item-value="id"
-                label="Item search"
                 placeholder="Start typing to Search"
                 prepend-icon="mdi-database-search"
                 return-object
