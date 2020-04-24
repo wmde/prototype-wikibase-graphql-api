@@ -1,16 +1,12 @@
 <template>
     <div>
         ({{ item.id }}) {{ item.label }}
-        <table>
-            <tr>
-                <th scope="col">Property</th>
-                <th scope="col">Value</th>
-            </tr>
-            <tr v-for="statement in results">
-                <th scope="row">{{ statement.mainsnak.property.labels[0].value }}</th>
-                <td>{{ statement.mainsnak.datavalue.labels[0].value }}</td>
-            </tr>
-        </table>
+         <v-data-table ref="bla"
+          :headers="headers"
+          :items="statements"
+          :items-per-page="5"
+          class="elevation-1"
+        ></v-data-table>
     </div>
 </template>
 
@@ -30,13 +26,33 @@ export default {
   },
   computed: {
     items() {
-        return this.results.map(res => {
-        return {
-            ...res,
-            label: res.labels[0].value,
-            description: res.descriptions[0].value
-        }
+        return (this.results || []).map(res => {
+          return {
+              ...res,
+              label: res.labels[0].value,
+              description: res.descriptions[0].value
+          }
         })
+    },
+    statements() {
+      console.log( this.results, "omg")
+      return (this.results || []).map( (statement) => {
+          return { property: statement.mainsnak.property.labels[0].value,
+          value: statement.mainsnak.datavalue.labels[0].value
+        }
+      } )
+    },
+    headers() {
+      return [
+        {
+          text: "Property",
+          value: "property",
+        },
+        {
+          text: "Value",
+          value: "value",
+        }
+      ]
     }
   },
 
@@ -89,4 +105,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.v-data-table {
+  margin-top: 5em;
+}
 </style>
