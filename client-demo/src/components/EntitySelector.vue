@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-autocomplete
-                v-model="selectedItem"
+                @input="$emit('selected', $event)"
                 :items="items"
                 :search-input.sync="search"
                 color="white"
@@ -19,9 +19,6 @@
                 <p>{{item.description}}</p>
             </template>
         </v-autocomplete>
-        <div v-if="selectedItem && selectedItem.label">
-            {{selectedItem.label}}
-        </div>
     </div>
 </template>
 
@@ -32,8 +29,7 @@ export default {
   data() {
     return {
       results: [],
-      search: null,
-      selectedItem: null
+      search: null
     }
   },
 

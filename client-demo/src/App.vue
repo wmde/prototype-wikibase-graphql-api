@@ -1,16 +1,22 @@
 <template>
   <div id="app" data-app="true">
-    <HelloWorld/>
+    <EntitySelector @selected="selectedItem = $event" />
+    <div v-if="selectedItem && selectedItem.label">
+      {{selectedItem.label}}
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EntitySelector from './components/EntitySelector.vue'
 
 export default {
+  data: () => ({
+    selectedItem: null
+  }),
   name: 'App',
   components: {
-    HelloWorld
+    EntitySelector
   }
 }
 </script>
