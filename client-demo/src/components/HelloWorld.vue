@@ -1,25 +1,28 @@
 <template>
-  <div>
-  Hellooo!
-      <v-autocomplete
-          :items="items"
-          :search-input.sync="search"
-          color="white"
-          hide-no-data
-          hide-selected
-          item-text="label"
-          item-value="id"
-          label="Item search"
-          placeholder="Start typing to Search"
-          prepend-icon="mdi-database-search"
-          return-object
-      >
-          <template v-slot:item="{ item }">
-              {{item.label}} ({{item.id}})
-              <p>{{item.description}}</p>
-          </template>
-      </v-autocomplete>
-  </div>
+    <div>
+        <v-autocomplete
+                v-model="selectedItem"
+                :items="items"
+                :search-input.sync="search"
+                color="white"
+                hide-no-data
+                hide-selected
+                item-text="label"
+                item-value="id"
+                label="Item search"
+                placeholder="Start typing to Search"
+                prepend-icon="mdi-database-search"
+                return-object
+        >
+            <template v-slot:item="{ item }">
+                {{item.label}} ({{item.id}})
+                <p>{{item.description}}</p>
+            </template>
+        </v-autocomplete>
+        <div v-if="selectedItem && selectedItem.label">
+            {{selectedItem.label}}
+        </div>
+    </div>
 </template>
 
 <script>
@@ -30,6 +33,7 @@ export default {
     return {
       results: [],
       search: null,
+      selectedItem: null
     }
   },
 
