@@ -25,6 +25,13 @@
 import gql from 'graphql-tag'
 
 export default {
+  props: {
+    entityType: {
+      required: false,
+      default: 'item',
+      type: String
+    }
+  },
   data() {
     return {
       results: [],
@@ -52,10 +59,11 @@ export default {
 
   apollo: {
     results: {
-      query: gql`query search($search: String!){
+      query: gql`query search($search: String!, $entityType: String!){
           search(
             query: $search,
-            language: "en"
+            language: "en",
+            entityType: $entityType
           ) {
             id
             labels(languages: ["en"]) { value }
@@ -64,7 +72,8 @@ export default {
       }`,
       variables() {
         return {
-          search: this.search
+          search: this.search,
+          entityType: this.entityType
         }
       },
       skip() {

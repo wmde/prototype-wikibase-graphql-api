@@ -1,7 +1,7 @@
 <template>
   <div id="app" data-app="true">
-    Item: <EntitySelector @selected="selectedItem = $event" />
-    Property: <EntitySelector @selected="selectedProperties.push( $event )" type="property" />
+    Item: <EntitySelector @selected="selectedItem = $event" entity-type="item" />
+    Property: <EntitySelector @selected="selectedProperties.push( $event )" entity-type="property" />
 
     <div v-if="selectedItem && selectedItem.label">
       <FancyItemTable
