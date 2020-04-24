@@ -7,10 +7,20 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
   constructor(baseUrl) {
     super();
     this.baseURL = baseUrl;
+    this._getEntitiesLoader = new DataLoader(async (ids) => {
+      const getEntitiesResponse = await this.get('', {
+        action: 'wbgetentities',
+        format: 'json',
+        ids: ids.join('|')
+      });
+      return ids.map(id => getEntitiesResponse.entities[id]);
+    }, {
+      maxBatchSize: 50,
+    });
   }
 
   async getEntity(id) {
-    return this.getEntitiesLoader.load(id);
+    return this._getEntitiesLoader.load(id);
   }
 
   async searchEntities(query, language) {
@@ -20,19 +30,8 @@ module.exports = class WikibaseActionApi extends RESTDataSource {
         search: query,
         language: language
       });
-      return searchEntitiesResponse.search.map(({ id }) => this.getEntitiesLoader.load(id));
+      return searchEntitiesResponse.search.map(({ id }) => this._getEntitiesLoader.load(id));
   }
-
-  getEntitiesLoader = new DataLoader(async (ids) => {
-    const getEntitiesResponse = await this.get('', {
-      action: 'wbgetentities',
-      format: 'json',
-      ids: ids.join('|')
-    });
-    return ids.map(id => getEntitiesResponse.entities[id]);
-  }, {
-    maxBatchSize: 50,
-  });
 
   _getUserAgentString() {
     const appInformation = `${packageInfo.name}/${packageInfo.version}`;
