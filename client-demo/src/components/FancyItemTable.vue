@@ -1,7 +1,16 @@
 <template>
     <div>
-        {{ item.id }}
-        {{ properties.length }}
+        ({{ item.id }}) {{ item.label }}
+        <table>
+            <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+            </tr>
+            <tr v-for="statement in results">
+                <th scope="row">{{ statement.mainsnak.property.labels[0].value }}</th>
+                <td>{{ statement.mainsnak.datavalue.labels[0].value }}</td>
+            </tr>
+        </table>
     </div>
 </template>
 
@@ -19,51 +28,62 @@ export default {
       type: Object
     },
   },
+  computed: {
+    items() {
+        return this.results.map(res => {
+        return {
+            ...res,
+            label: res.labels[0].value,
+            description: res.descriptions[0].value
+        }
+        })
+    }
+  },
 
-        computed: {
-            items() {
-                return this.results.map(res => {
-                    return {
-                        ...res,
-                        label: res.labels[0].value,
-                        description: res.descriptions[0].value
-                    }
-                })
+    watch: {
+        search(val) {
+            console.log(val)
+        }
+    },
+
+    apollo: {
+      results: {
+        query: gql`query item($item: String!, $properties: [String]){
+          item(id: $item) {
+            claims(propertyIDs: $properties) {
+             mainsnak {
+              property {
+               labels(languages: ["en"]) {
+                value
+               }
+              }
+              ... on PropertyValueSnak {
+               datavalue {
+                ... on Item {
+                 labels(languages: ["en"]) {
+                  value
+                 }
+                }
+               }
+              }
+             }
             }
-        },
-
-        watch: {
-            search(val) {
-                console.log(val)
-            }
-        },
-
-        apollo: {
-            results: {
-                query: gql`query search($search: String!){
-          search(
-            query: $search,
-            language: "en"
-          ) {
-            id
-            labels(languages: ["en"]) { value }
-            descriptions(languages: ["en"]) { value }
-          }
-      }`,
+           }
+          }`,
         variables() {
-            return {
-                search: this.search
-            }
+          return {
+            properties: this.properties.map( ( property ) => property.id ),
+            item: this.item.id
+          }
         },
         skip() {
-            return !this.search
+          return !this.item || this.properties.length === 0
         },
         update(result) {
-            console.log(result)
-            return result.search
+          return result.item.claims
         },
         throttle: 100
-            }
+      }
     }
 }
 </script>
