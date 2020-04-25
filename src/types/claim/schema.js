@@ -49,7 +49,7 @@ module.exports = gql`
   }
 
   type Qualifier implements Snak {
-    property: Property! # We probably want this to be a Property object and not a string at some point
+    property: Property!
     snaktype: String!
     datatype: String!
 

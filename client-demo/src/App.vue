@@ -1,16 +1,30 @@
 <template>
-  <div id="app">
-    <HelloWorld/>
+  <div id="app" data-app="true">
+    Item: <EntitySelector @selected="selectedItem = $event" entity-type="item" />
+    Property: <EntitySelector @selected="selectedProperties.push( $event )" entity-type="property" />
+
+    <div v-if="selectedItem && selectedItem.label">
+      <FancyItemTable
+              :item="selectedItem"
+              :properties="selectedProperties"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EntitySelector from './components/EntitySelector.vue'
+import FancyItemTable from './components/FancyItemTable.vue'
 
 export default {
+  data: () => ({
+    selectedItem: null,
+    selectedProperties: []
+  }),
   name: 'App',
   components: {
-    HelloWorld
+    EntitySelector,
+    FancyItemTable
   }
 }
 </script>
