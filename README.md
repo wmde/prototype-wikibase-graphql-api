@@ -134,3 +134,14 @@ Note that for now only item values and string values are implemented.
   }
 }
 ```
+
+Property search:
+```gql
+{
+  search(query: "instance of", language: "en", entityType: "property") {
+    labels(languages: ["en"]) {
+      value
+    }
+  }
+}
+```
