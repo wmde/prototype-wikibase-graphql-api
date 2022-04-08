@@ -1,5 +1,5 @@
 # prototype-wikibase-graphql-api
-GraphQL API Prototyping April 2020
+GraphQL API Prototyping April 2020. Discontinued afterwards.
 
 ## Installation
 Set the user-specific environment variables: `cp .env.example .env` and modify `.env` accordingly.
